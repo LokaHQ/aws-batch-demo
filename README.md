@@ -37,3 +37,7 @@ docker run -it --rm -p 5000:5000 -e JOB_DEFINITION=dummy -e JOB_QUEUE=dummy aws-
 # run the compute job
 docker run -it --rm aws-batch-demo /app/bin/demoapp-compute --help
 ```
+
+## FAQ
+
+…
