@@ -1,0 +1,40 @@
+{
+  "name": "aws-batch-demo",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc",
+    "compile": "tsc --pretty",
+    "cdk": "cdk",
+    "deploy": "cdk deploy",
+    "synth": "cdk synth",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "prettier": "prettier --check src/",
+    "prettier:fix": "prettier --write src/",
+    "test": "jest",
+    "test:fix": "jest --updateSnapshot"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.16.0",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.16"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "aws-cdk": "^2.16.0",
+    "eslint": "^8.11.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.7.0",
+    "typescript": "~4.6.2"
+  },
+  "engines": {
+    "node": ">=16",
+    "yarn": "~1.22.0 <2"
+  }
+}

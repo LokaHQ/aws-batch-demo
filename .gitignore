@@ -1,0 +1,15 @@
+*.d.ts
+*.js
+node_modules
+cdk.out
+cdktf.out
+cdktf.log
+*terraform.*.tfstate*
+.gen
+.terraform
+tsconfig.tsbuildinfo
+!jest.config.js
+!jest.setup.js
+.env
+_build/
+yarn-error.log
