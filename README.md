@@ -1,11 +1,11 @@
-# AWS Batch Demo in CDK
+# AWS Batch Demo in CDK & Python
 
-## Pre-requisits
+## Pre-requisites
 
 * `node` and `yarn`
 * aws access - `aws sts get-caller-identity`
 
-## Useful commands
+## Useful commands for CDK (aws infrastructure)
 
 * `yarn build`     compile typescript to js
 * `yarn test`      perform the jest unit tests
@@ -18,6 +18,22 @@
 ## Resources created
 
 * AWS Batch
+* ECR, Fargate, ALB
 * S3
 * RDS
-* ...
+
+
+## Test locally
+
+A demo application in Python Flask is provided in `demoapp/` (and the coresponding `Dockerfile`, `setup.cfg`, `pyproject.toml`)
+
+```
+# build docker image
+docker build -t aws-batch-demo .
+
+# runs the web app by default
+docker run -it --rm -p 5000:5000 -e JOB_DEFINITION=dummy -e JOB_QUEUE=dummy aws-batch-demo
+
+# run the compute job
+docker run -it --rm aws-batch-demo /app/bin/demoapp-compute --help
+```
