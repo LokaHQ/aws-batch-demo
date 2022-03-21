@@ -1,39 +1,25 @@
-import * as batch from 'aws-cdk-lib/aws-batch';
-import { DockerImageAsset } from 'aws-cdk-lib/aws-ecr-assets';
+import * as batch from '@aws-cdk/aws-batch-alpha';
+import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { Construct } from 'constructs';
-import { posix } from 'path';
 
 
 interface BatchProps {
-  image: DockerImageAsset;
+  image: ContainerImage;
   imageCommand: string[];
 }
 export function createBatch(scope: Construct, name: string, props: BatchProps) {
+  const computeEnvironment = new batch.ComputeEnvironment(scope, "computeEnvironment", {
 
-
-  const computeEnvironment = new batch.CfnComputeEnvironment(scope, "computeEnvironment", {
-    type: "type"
   });
 
-  const jobQueue = new batch.CfnJobQueue(scope, 'jobQueue', {
-    computeEnvironmentOrder: [{
-      computeEnvironment: 'computeEnvironment',
-      order: 123,
-    }],
-    priority: 123,
-
+  const jobQueue = new batch.JobQueue(scope, 'jobQueue', {
     jobQueueName: 'jobQueueName',
-    state: 'state',
+    computeEnvironments: [{computeEnvironment, order: 100}],
   });
 
-  const jobDefinition = new batch.CfnJobDefinition(scope, 'jobDefinition', {
-    type: 'type',
+  const jobDefinition = new batch.JobDefinition(scope, 'jobDefinition', {
     jobDefinitionName: 'jobDefinitionName',
-
-    containerProperties: {
-      image: props.image.imageUri,
-      command: props.imageCommand,
-    },
+    container: {image: props.image, command: props.imageCommand},
   });
 
   return {computeEnvironment, jobDefinition, jobQueue};

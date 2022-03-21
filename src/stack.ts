@@ -15,9 +15,10 @@ export class AwsBatchDemoStack extends Stack {
     const asset = new DockerImageAsset(this, 'image', {
       directory: path.join(__dirname, '..'),
     });
+    const containerImage = ContainerImage.fromDockerImageAsset(asset);
 
     const batch = createBatch(this, "batch", {
-      image: asset,
+      image: containerImage,
       imageCommand: ["/app/bin/demoapp-compute"]
     });
 
@@ -25,10 +26,10 @@ export class AwsBatchDemoStack extends Stack {
       vpc,
       memoryLimitMiB: 512,
       taskImageOptions: {
-        image: ContainerImage.fromDockerImageAsset(asset),
+        image: containerImage,
         environment: {
-          JOB_DEFINITION: batch.jobDefinition.getAtt("Arn").toString(),
-          JOB_QUEUE: batch.jobQueue.getAtt("Arn").toString(),
+          JOB_DEFINITION: batch.jobDefinition.jobDefinitionArn,
+          JOB_QUEUE: batch.jobQueue.jobQueueArn,
         },
       },
       desiredCount: 2,

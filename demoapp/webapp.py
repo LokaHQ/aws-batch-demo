@@ -3,8 +3,8 @@ import boto3
 import os, uuid
 
 ## Configuration
-JOB_DEFINITION = os.environ['JOB_DEFINITION']
-JOB_QUEUE = os.environ['JOB_QUEUE']
+JOB_DEFINITION = os.environ['JOB_DEFINITION'] # name or Arn
+JOB_QUEUE = os.environ['JOB_QUEUE'] # name, name:revision or Arn
 
 
 app = Flask(__name__)
