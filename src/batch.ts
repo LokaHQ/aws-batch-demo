@@ -1,13 +1,19 @@
 import * as batch from "@aws-cdk/aws-batch-alpha";
+import { IVpc } from "aws-cdk-lib/aws-ec2";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
 
 interface BatchProps {
+  vpc: IVpc;
   image: ContainerImage;
   imageCommand: string[];
 }
 export function createBatch(scope: Construct, name: string, props: BatchProps) {
-  const computeEnvironment = new batch.ComputeEnvironment(scope, "computeEnvironment", {});
+  const computeEnvironment = new batch.ComputeEnvironment(scope, "computeEnvironment", {
+    computeResources: {
+      vpc: props.vpc,
+    },
+  });
 
   const jobQueue = new batch.JobQueue(scope, "jobQueue", {
     jobQueueName: "jobQueueName",

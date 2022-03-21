@@ -3,7 +3,6 @@ import { Vpc } from "aws-cdk-lib/aws-ec2";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { CfnDisk } from "aws-cdk-lib/aws-lightsail";
 import { Construct } from "constructs";
 import path from "path";
 import { createBatch } from "./batch";
@@ -19,6 +18,7 @@ export class AwsBatchDemoStack extends Stack {
     const containerImage = ContainerImage.fromDockerImageAsset(asset);
 
     const batch = createBatch(this, "batch", {
+      vpc,
       image: containerImage,
       imageCommand: ["/app/bin/demoapp-compute"],
     });
