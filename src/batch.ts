@@ -12,6 +12,7 @@ export function createBatch(scope: Construct, name: string, props: BatchProps) {
   const computeEnvironment = new batch.ComputeEnvironment(scope, "computeEnvironment", {
     computeResources: {
       vpc: props.vpc,
+      type: batch.ComputeResourceType.FARGATE,
     },
   });
 
