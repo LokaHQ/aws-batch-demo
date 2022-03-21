@@ -1,8 +1,9 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Vpc } from "aws-cdk-lib/aws-ec2";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
+import { CfnDisk } from "aws-cdk-lib/aws-lightsail";
 import { Construct } from "constructs";
 import path from "path";
 import { createBatch } from "./batch";
@@ -10,19 +11,19 @@ import { createBatch } from "./batch";
 export class AwsBatchDemoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-    const vpc = new Vpc(this, "vpc",{});
+    const vpc = new Vpc(this, "vpc", {});
 
-    const asset = new DockerImageAsset(this, 'image', {
-      directory: path.join(__dirname, '..'),
+    const asset = new DockerImageAsset(this, "image", {
+      directory: path.join(__dirname, ".."),
     });
     const containerImage = ContainerImage.fromDockerImageAsset(asset);
 
     const batch = createBatch(this, "batch", {
       image: containerImage,
-      imageCommand: ["/app/bin/demoapp-compute"]
+      imageCommand: ["/app/bin/demoapp-compute"],
     });
 
-    const loadBalancedEcsService = new ApplicationLoadBalancedFargateService(this, 'Service', {
+    const loadBalancedEcsService = new ApplicationLoadBalancedFargateService(this, "Service", {
       vpc,
       memoryLimitMiB: 512,
       taskImageOptions: {
@@ -33,6 +34,10 @@ export class AwsBatchDemoStack extends Stack {
         },
       },
       desiredCount: 2,
+    });
+
+    new CfnOutput(this, "alb-url", {
+      value: `http://${loadBalancedEcsService.loadBalancer.loadBalancerDnsName}/`,
     });
   }
 }
