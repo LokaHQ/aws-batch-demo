@@ -1,5 +1,5 @@
 import * as batch from "@aws-cdk/aws-batch-alpha";
-import { IVpc } from "aws-cdk-lib/aws-ec2";
+import { IVpc, SubnetType } from "aws-cdk-lib/aws-ec2";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
 
@@ -12,7 +12,8 @@ export function createBatch(scope: Construct, name: string, props: BatchProps) {
   const computeEnvironment = new batch.ComputeEnvironment(scope, "computeEnvironment", {
     computeResources: {
       vpc: props.vpc,
-      type: batch.ComputeResourceType.FARGATE,
+      vpcSubnets: { subnetType: SubnetType.PUBLIC },
+      type: batch.ComputeResourceType.ON_DEMAND,
     },
   });
 
@@ -23,7 +24,7 @@ export function createBatch(scope: Construct, name: string, props: BatchProps) {
 
   const jobDefinition = new batch.JobDefinition(scope, "jobDefinition", {
     jobDefinitionName: "jobDefinitionName",
-    container: { image: props.image, command: props.imageCommand },
+    container: { image: props.image, command: props.imageCommand, assignPublicIp: true },
   });
 
   return { computeEnvironment, jobDefinition, jobQueue };
