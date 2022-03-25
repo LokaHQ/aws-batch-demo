@@ -2,6 +2,7 @@ import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 import path from "path";
 import { createBatch } from "./batch";
@@ -47,7 +48,17 @@ export class AwsBatchDemoStack extends Stack {
       path: "/healthcheck",
     });
 
-    new CfnOutput(this, "alb-url", {
+    loadBalancedEcsService.taskDefinition.addToTaskRolePolicy(new PolicyStatement({
+      actions: ["batch:ListJobs"],
+      resources: ["*"],
+    }));
+    loadBalancedEcsService.taskDefinition.addToTaskRolePolicy(new PolicyStatement({
+      actions: ["batch:SubmitJob"],
+      resources: [batch.jobQueue.jobQueueArn, batch.jobDefinition.jobDefinitionArn],
+    }));
+
+    new CfnOutput(this, "WebAppUrl", {
+      description: "URL to access the deployed Web App",
       value: `http://${loadBalancedEcsService.loadBalancer.loadBalancerDnsName}/`,
     });
   }
