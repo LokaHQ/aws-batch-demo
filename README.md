@@ -41,3 +41,18 @@ docker run -it --rm aws-batch-demo /app/bin/demoapp-compute --help
 ## FAQ
 
 …
+
+
+## CDK Bootstrap
+
+Before using CDK in an AWS Account and Region, the Account + Region needs to be "cdk bootstraped"
+
+```
+# check if your aws is properly configured
+aws sts get-caller-identity
+
+# bootstrap cdk for the account and region
+yarn cdk bootstrap
+```
+
+This **only needs to be done once** in the history of the account/region.

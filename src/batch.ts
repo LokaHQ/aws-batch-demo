@@ -24,7 +24,7 @@ export function createBatch(scope: Construct, name: string, props: BatchProps) {
 
   const jobDefinition = new batch.JobDefinition(scope, "jobDefinition", {
     jobDefinitionName: "jobDefinitionName",
-    container: { image: props.image, command: props.imageCommand, assignPublicIp: true },
+    container: { image: props.image, command: props.imageCommand },
   });
 
   return { computeEnvironment, jobDefinition, jobQueue };
