@@ -14,7 +14,7 @@ export class AwsBatchDemoStack extends Stack {
 
     // Build and upload a Docker image to ECR (can we have custom repository?)
     const asset = new DockerImageAsset(this, "image", {
-      directory: path.join(__dirname, ".."),
+      directory: path.join(__dirname, "..", "python-demoapp"),
     });
     const containerImage = ContainerImage.fromDockerImageAsset(asset);
     // Alternatively, we can use an image already in ECR

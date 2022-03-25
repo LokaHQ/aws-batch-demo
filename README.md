@@ -18,25 +18,12 @@
 ## Resources created
 
 * AWS Batch
-* ECR, Fargate, ALB
+* Fargate web app with ALB
 * S3
-* RDS
 
+## Demo webapp
 
-## Test locally
-
-A demo application in Python Flask is provided in `demoapp/` (and the coresponding `Dockerfile`, `setup.cfg`, `pyproject.toml`)
-
-```
-# build docker image
-docker build -t aws-batch-demo .
-
-# runs the web app by default
-docker run -it --rm -p 5000:5000 -e JOB_DEFINITION=dummy -e JOB_QUEUE=dummy aws-batch-demo
-
-# run the compute job
-docker run -it --rm aws-batch-demo /app/bin/demoapp-compute --help
-```
+A demo webapp project in python Flask is provided (and deployed) in the [python-demoapp](./python-demoapp/) directory.
 
 ## FAQ
 
