@@ -36,6 +36,11 @@ def submit_job():
     return redirect(url_for('.index'))
 
 
+@app.route("/healthcheck", methods=['GET'])
+def healthcheck():
+    return 'ok\n'
+
+
 '''
   Returns a dictionary of all jobs, grouped by their status.
 

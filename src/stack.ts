@@ -43,6 +43,10 @@ export class AwsBatchDemoStack extends Stack {
       // redirectHTTP: true,
     });
 
+    loadBalancedEcsService.targetGroup.configureHealthCheck({
+      path: "/healthcheck",
+    });
+
     new CfnOutput(this, "alb-url", {
       value: `http://${loadBalancedEcsService.loadBalancer.loadBalancerDnsName}/`,
     });
