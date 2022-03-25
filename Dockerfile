@@ -15,7 +15,7 @@ COPY --from=builder /app/ /app/
 
 ENV PYTHONUSERBASE=/app
 ENV FLASK_APP=demoapp.webapp:app
-ENV PORT=5000
+ENV HTTP_PORT=5000
 
 # default for the web app, for the Batch Job we'll override it to `/app/bin/demoapp-compute`
-CMD /app/bin/flask run --host=0.0.0.0
+CMD /app/bin/flask run --host=0.0.0.0 --port $HTTP_PORT

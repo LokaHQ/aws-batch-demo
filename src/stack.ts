@@ -32,12 +32,15 @@ export class AwsBatchDemoStack extends Stack {
       assignPublicIp: true,
       taskImageOptions: {
         image: containerImage,
+        containerPort: 7070,
         environment: {
+          HTTP_PORT: "7070",
           JOB_DEFINITION: batch.jobDefinition.jobDefinitionArn,
           JOB_QUEUE: batch.jobQueue.jobQueueArn,
         },
       },
       desiredCount: 2,
+      // redirectHTTP: true,
     });
 
     new CfnOutput(this, "alb-url", {
