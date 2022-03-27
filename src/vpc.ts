@@ -1,4 +1,4 @@
-import { IVpc, SubnetType, Vpc } from "aws-cdk-lib/aws-ec2";
+import { SubnetType, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
 
 /**
@@ -11,7 +11,7 @@ import { Construct } from "constructs";
  * @param scope the parent CDK scope (typically the stack)
  * @returns an interface to the created VPC
  */
-export function createVPC(scope: Construct): IVpc {
+export function createVPC(scope: Construct): Vpc {
   return new Vpc(scope, "vpc", {
     subnetConfiguration: [
       {

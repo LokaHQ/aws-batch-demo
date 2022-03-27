@@ -1,12 +1,11 @@
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { Stack, StackProps } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
-import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { Construct } from "constructs";
-import path from "path";
 import { createBatch } from "./batch";
 import { createVPC } from "./vpc";
+import { createWebApp } from "./webapp";
+import path from "path";
 
 export class AwsBatchDemoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -27,39 +26,6 @@ export class AwsBatchDemoStack extends Stack {
       imageCommand: ["/app/bin/demoapp-compute"],
     });
 
-    const loadBalancedEcsService = new ApplicationLoadBalancedFargateService(this, "Service", {
-      vpc,
-      memoryLimitMiB: 512,
-      assignPublicIp: true,
-      taskImageOptions: {
-        image: containerImage,
-        containerPort: 7070,
-        environment: {
-          HTTP_PORT: "7070",
-          JOB_DEFINITION: batch.jobDefinition.jobDefinitionArn,
-          JOB_QUEUE: batch.jobQueue.jobQueueArn,
-        },
-      },
-      desiredCount: 2,
-      // redirectHTTP: true,
-    });
-
-    loadBalancedEcsService.targetGroup.configureHealthCheck({
-      path: "/healthcheck",
-    });
-
-    loadBalancedEcsService.taskDefinition.addToTaskRolePolicy(new PolicyStatement({
-      actions: ["batch:ListJobs"],
-      resources: ["*"],
-    }));
-    loadBalancedEcsService.taskDefinition.addToTaskRolePolicy(new PolicyStatement({
-      actions: ["batch:SubmitJob"],
-      resources: [batch.jobQueue.jobQueueArn, batch.jobDefinition.jobDefinitionArn],
-    }));
-
-    new CfnOutput(this, "WebAppUrl", {
-      description: "URL to access the deployed Web App",
-      value: `http://${loadBalancedEcsService.loadBalancer.loadBalancerDnsName}/`,
-    });
+    createWebApp(this, vpc, containerImage, batch);
   }
 }
