@@ -1,7 +1,7 @@
 FROM python:3.10 as builder
 
 WORKDIR /src/
-COPY pyproject.toml setup.cfg /src/
+COPY pyproject.toml MANIFEST.in /src/
 COPY demoapp /src/demoapp
 
 ENV PYTHONUSERBASE=/app
