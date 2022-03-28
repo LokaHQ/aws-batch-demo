@@ -1,5 +1,4 @@
 import { JobDefinition, JobQueue } from "@aws-cdk/aws-batch-alpha";
-import { CfnOutput } from "aws-cdk-lib";
 import { IVpc } from "aws-cdk-lib/aws-ec2";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
@@ -46,11 +45,6 @@ export function createWebApp(
       resources: [batch.jobQueue.jobQueueArn, batch.jobDefinition.jobDefinitionArn],
     })
   );
-
-  new CfnOutput(scope, "WebAppUrl", {
-    description: "URL to access the deployed Web App",
-    value: `http://${loadBalancedFargate.loadBalancer.loadBalancerDnsName}/`,
-  });
 
   return loadBalancedFargate;
 }

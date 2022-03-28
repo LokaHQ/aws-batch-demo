@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { createBatch } from "./batch";
@@ -12,20 +12,35 @@ export class AwsBatchDemoStack extends Stack {
     super(scope, id, props);
     const vpc = createVPC(this);
 
-    // Build and upload a Docker image to ECR (can we have custom repository?)
+    // Build and upload a Docker image to ECR
     const asset = new DockerImageAsset(this, "image", {
       directory: path.join(__dirname, "..", "python-demoapp"),
     });
     const containerImage = ContainerImage.fromDockerImageAsset(asset);
-    // Alternatively, we can use an image already in ECR
-    // const containerImage = ContainerImage.fromEcrRepository(…);
+    /*
+     *  Alternatively, we can use an image already in ECR
+        const containerImage = ContainerImage.fromEcrRepository(…);
+    */
 
     const batch = createBatch(this, "batch", {
       vpc,
       image: containerImage,
-      imageCommand: ["/app/bin/demoapp-compute"],
+      imageCommand: ["/app/bin/demoapp-compute", "--name", "Ref::inputdata"],
     });
 
-    createWebApp(this, vpc, containerImage, batch);
+    const app = createWebApp(this, vpc, containerImage, batch);
+
+    /**
+     * Cloudformation Outputs
+     */
+    new CfnOutput(this, "WebAppUrl", {
+      value: `http://${app.loadBalancer.loadBalancerDnsName}/`,
+    });
+    new CfnOutput(this, "JobDefinitonArn", {
+      value: batch.jobDefinition.jobDefinitionArn,
+    });
+    new CfnOutput(this, "JobQueueArn", {
+      value: batch.jobQueue.jobQueueArn,
+    });
   }
 }
