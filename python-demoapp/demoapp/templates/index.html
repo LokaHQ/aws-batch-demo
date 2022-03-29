@@ -6,20 +6,21 @@
 
 <body>
   <form action="{{ url_for('.submit_job') }}" method="post">
-    <input type="hidden" name="job_name" value="{{ job_name }}">
-    <input type="text" id="text-input-data" name="data"><br>
+    <input type="hidden" name="job-name" value="{{ job_name }}">
+    <input type="text" id="text-input-data" name="text-input-data"><br>
     <input type="submit" id="submit" value="Submit Job!">
   </form>
   <hr/>
 
   <div>
-    {% for status, jobs in jobs_grouped_by_status %}
+    {% for status, jobs in jobs_grouped_by_status.items() %}
     <h3>{{ status }} jobs:</h3>
-    <ul>
+    <dl>
       {% for job in jobs %}
-      <li>{{ job.id }}</li>
+      <dt>{{ job.jobId }}</dt>
+      <dd>{{ job.container }}</dd>
       {% endfor %}
-    </ul>
+    </dl>
     {% endfor %}
   </div>
 </body>

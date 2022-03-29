@@ -11,11 +11,14 @@ app.config.update(
         "JOB_QUEUE": os.environ["JOB_QUEUE"],  # name, name:revision or Arn
     }
 )
-app.secret_key = os.environ.get("SECRET_KEY", "dev")
+app.secret_key = os.environ["SECRET_KEY"]
 
 
 @app.route("/", methods=["GET"])
 def index():
+    """
+    Shows a html form with a single input field and a list of the jobs in AWS Batch, grouped by their status
+    """
     return render_template(
         "index.html",
         job_name=uuid.uuid4(),
@@ -29,17 +32,21 @@ def index():
 @app.route("/submit", methods=["POST"])
 def submit_job():
     """
+    Handles the POST-ed form and submits a job to AWS Batch
+
+    The form data is expected to contain a "job-name" and a "text-input-data" fields.
+
     ref: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch.html#Batch.Client.submit_job
     """
-    job_name = request.form["job_name"]
-    data = request.form["data"]
+    job_name = request.form["job-name"]
+    data = request.form["text-input-data"]
 
     client = boto3.client("batch")
     response = client.submit_job(
         jobName=job_name,
         jobDefinition=app.config["JOB_DEFINITION"],
         jobQueue=app.config["JOB_QUEUE"],
-        parameters={"data": data},
+        parameters={"inputdata": data},
         propagateTags=True,
     )
     job_id = response["jobId"]
