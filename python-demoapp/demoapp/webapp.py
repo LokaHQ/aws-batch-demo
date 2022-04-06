@@ -9,6 +9,8 @@ app.config.update(
     {
         "JOB_DEFINITION": os.environ["JOB_DEFINITION"],  # name or Arn
         "JOB_QUEUE": os.environ["JOB_QUEUE"],  # name, name:revision or Arn
+        # allows us to relocate the web application on another url root:
+        "APPLICATION_ROOT": os.environ.get("FLASK_APPLICATION_ROOT", ""),
     }
 )
 app.secret_key = os.environ["SECRET_KEY"]
