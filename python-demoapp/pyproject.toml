@@ -1,0 +1,16 @@
+[project]
+name = "demoapp"
+version = "1.0"
+dependencies = [
+    "flask",
+    "click",
+    "boto3",
+]
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages]
+find = {}
+
+[project.scripts]
+demoapp-compute = "demoapp.compute:main"

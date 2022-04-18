@@ -1,9 +1,14 @@
-name: Lint and Compile
+name: Lint and Compile CDK
 
 on:
   push:
     branches: [main]
   pull_request:
+
+defaults:
+  run:
+    shell: bash
+    working-directory: infrastructure
 
 jobs:
   ci:

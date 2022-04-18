@@ -1,23 +1,15 @@
-# AWS Batch Demo in CDK
+# `AWS Batch demo`
 
-## Pre-requisits
+This project demonstrates the use of [AWS Batch](https://aws.amazon.com/batch/)
+with full infrastructure written in AWS CDK (typescript) and a python application
+which consists of a web part and compute part that runs in AWS Batch.
 
-* `node` and `yarn`
-* aws access - `aws sts get-caller-identity`
+Infrastructure diagram:
+![infrastructure-diagram](https://user-images.githubusercontent.com/92797652/163819686-9a0974ba-068a-4d81-b7d1-372b23ef8e74.png)
 
-## Useful commands
+Go to the `./infrastructure/` directory for more info about the CDK setup and source code.
 
-* `yarn build`     compile typescript to js
-* `yarn test`      perform the jest unit tests
-* `yarn lint`      lint the code
-* `yarn prettier`  check for well edited text files
-* `yarn deploy`    deploy this stack to your default AWS account/region
-* `yarn diff`      compare deployed stack with current state
-* `yarn synth`     emits the synthesized CloudFormation template
+Go to the `./python-demoapp/` directory for the demo application.
 
-## Resources created
-
-* AWS Batch
-* S3
-* RDS
-* ...
+Github actions are configured to test the infrastructure code using jest snapshots, eslint and prettier.
+Continuous deployment is outside of the scope of the demonstration.
