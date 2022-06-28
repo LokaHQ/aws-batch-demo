@@ -1,11 +1,12 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
+import * as cdk from 'aws-cdk-lib';
+import { AwsBatchDemoStack} from '../src/stack';
+import 'jest-cdk-snapshot';
 
-// example test. To run these tests, uncomment this file along with the
-test('Test if Stack is created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new Stack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
-});
+test("snapshot matches previous state", () => {
+  const app = new cdk.App();
+  const stack = new AwsBatchDemoStack(app, 'MyTestStack');
+
+  expect(stack).toMatchCdkSnapshot({
+    ignoreAssets: true,
+  });
+})
