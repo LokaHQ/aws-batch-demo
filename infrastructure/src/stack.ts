@@ -1,6 +1,6 @@
 import path from "path";
 import { Construct } from "constructs";
-import { CfnOutput, Size, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Size, Stack, StackProps, Tags } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import {
@@ -60,6 +60,9 @@ export class AwsBatchDemoStack extends Stack {
     const app = createWebApp(this, vpc, containerImage, { jobQueue: batchQueue, jobDefinition: batchDefn });
 
     batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
+
+    Tags.of(this).add("Team", "DevOps");
+    Tags.of(this).add("Project", "BatchDemo");
 
     /**
      * Cloudformation Outputs
