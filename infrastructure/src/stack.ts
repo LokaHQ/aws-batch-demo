@@ -65,18 +65,21 @@ export class AwsBatchDemoStack extends Stack {
     batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
 
     const f = new lambda.Function(this, "batch-lambda", {
-      runtime: lambda.Runtime.FROM_IMAGE,
-      handler: lambda.Handler.FROM_IMAGE,
-      code: lambda.Code.fromAssetImage(asset.imageUri, {
-        cmd: ["cmd"],
-        entrypoint: ["entrypoint"],
-      }),
+      // runtime: lambda.Runtime.FROM_IMAGE,
+      // handler: lambda.Handler.FROM_IMAGE,
+      // code: lambda.Code.fromAssetImage(asset.imageUri, {
+      //   cmd: ["cmd"],
+      //   entrypoint: ["entrypoint"],
+      // }),
+      runtime: lambda.Runtime.PYTHON_3_7,
+      handler: 'lambda.lambda_handler',
+      code: lambda.Code.fromAsset(path.join(__dirname, "..", "..", "python-demoapp/demoapp")),
 
       memorySize: 128,
       architecture: lambda.Architecture.X86_64,
       timeout: cdk.Duration.seconds(10),
 
-      functionName: id,
+      functionName: "batchdemo-lambda",
     });
 
     Tags.of(this).add("Team", "DevOps");
