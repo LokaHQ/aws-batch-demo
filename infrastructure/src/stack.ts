@@ -17,6 +17,8 @@ import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";
 import path from "path";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as events from "aws-cdk-lib/aws-events";
+import * as targets from "aws-cdk-lib/aws-events-targets";
 import * as cdk from "aws-cdk-lib";
 
 export class AwsBatchDemoStack extends Stack {
@@ -72,7 +74,7 @@ export class AwsBatchDemoStack extends Stack {
       //   entrypoint: ["entrypoint"],
       // }),
       runtime: lambda.Runtime.PYTHON_3_7,
-      handler: 'lambda.lambda_handler',
+      handler: "lambda.lambda_handler",
       code: lambda.Code.fromAsset(path.join(__dirname, "..", "..", "python-demoapp/demoapp")),
 
       memorySize: 128,
@@ -81,6 +83,25 @@ export class AwsBatchDemoStack extends Stack {
 
       functionName: "batchdemo-lambda",
     });
+
+    const rule = new events.Rule(this, "batchdemo-rule", {
+      ruleName: "batchdemo-rule",
+      eventPattern: {
+        source: ["aws.batch"],
+        detail: {
+          // status: ["FAILED"],
+          status: ["SUCCEEDED"],
+        },
+        detailType: ["Batch Job State Change"],
+      },
+    });
+
+    rule.addTarget(
+      new targets.LambdaFunction(f, {
+        retryAttempts: 5,
+        maxEventAge: cdk.Duration.seconds(300),
+      })
+    );
 
     Tags.of(this).add("Team", "DevOps");
     Tags.of(this).add("Project", "BatchDemo");
