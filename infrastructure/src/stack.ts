@@ -15,6 +15,9 @@ import {
 
 import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";
+import path from "path";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as cdk from "aws-cdk-lib";
 
 export class AwsBatchDemoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -60,6 +63,21 @@ export class AwsBatchDemoStack extends Stack {
     const app = createWebApp(this, vpc, containerImage, { jobQueue: batchQueue, jobDefinition: batchDefn });
 
     batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
+
+    const f = new lambda.Function(this, "batch-lambda", {
+      runtime: lambda.Runtime.FROM_IMAGE,
+      handler: lambda.Handler.FROM_IMAGE,
+      code: lambda.Code.fromAssetImage(asset.imageUri, {
+        cmd: ["cmd"],
+        entrypoint: ["entrypoint"],
+      }),
+
+      memorySize: 128,
+      architecture: lambda.Architecture.X86_64,
+      timeout: cdk.Duration.seconds(10),
+
+      functionName: id,
+    });
 
     Tags.of(this).add("Team", "DevOps");
     Tags.of(this).add("Project", "BatchDemo");
