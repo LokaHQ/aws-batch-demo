@@ -78,14 +78,12 @@ export class AwsBatchDemoStack extends Stack {
       functionName: "batchdemo-lambda",
     });
 
-    const imageTag = asset.imageUri.split(':')[1];
-
     const f2 = new lambda.Function(this, "batch-lambda-image", {
       runtime: lambda.Runtime.FROM_IMAGE,
       handler: lambda.Handler.FROM_IMAGE,
       code: lambda.Code.fromEcrImage(asset.repository, {
         cmd: ["lambda.lambda_handler"],
-        tag: imageTag,
+        tag: asset.assetHash,
       }),
 
       memorySize: 128,
