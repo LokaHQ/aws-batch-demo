@@ -82,8 +82,9 @@ export class AwsBatchDemoStack extends Stack {
       runtime: lambda.Runtime.FROM_IMAGE,
       handler: lambda.Handler.FROM_IMAGE,
       code: lambda.Code.fromEcrImage(asset.repository, {
+        entrypoint: ["/usr/local/bin/python", "-m", "awslambdaric"],
         cmd: ["lambda.lambda_handler"],
-        tag: asset.assetHash,
+        tagOrDigest: asset.assetHash,
       }),
 
       memorySize: 128,
