@@ -5,7 +5,6 @@ dependencies = [
     "flask",
     "click",
     "boto3",
-    "awslambdaric",
 ]
 [tool.setuptools]
 include-package-data = true

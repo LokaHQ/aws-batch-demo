@@ -1,11 +1,27 @@
+ARG DIR="/src"
+
 FROM python:3.10 as builder
 
-WORKDIR /src/
-COPY pyproject.toml MANIFEST.in /src/
-COPY demoapp /src/demoapp
+ARG DIR
+
+RUN apt-get update && \
+  apt-get install -y \
+  g++ \
+  make \
+  cmake \
+  unzip \
+  libcurl4-openssl-dev
+
+RUN mkdir -p ${DIR}
+COPY pyproject.toml MANIFEST.in ${DIR}
+COPY demoapp ${DIR}/demoapp
+
+RUN pip install \
+    --target ${DIR} \
+        awslambdaric
 
 ENV PYTHONUSERBASE=/app
-RUN pip install --user /src
+RUN pip install --user ${DIR}
 
 
 # Runtime container image for both the Web App and the AWS Batch compute image
