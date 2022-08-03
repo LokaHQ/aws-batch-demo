@@ -1,9 +1,6 @@
-ARG DIR="/src"
+FROM public.ecr.aws/docker/library/python:3.9 as builder
 
-FROM python:3.10 as builder
-
-ARG DIR
-
+# Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
   apt-get install -y \
   g++ \
@@ -12,20 +9,17 @@ RUN apt-get update && \
   unzip \
   libcurl4-openssl-dev
 
-RUN mkdir -p ${DIR}
-COPY pyproject.toml MANIFEST.in ${DIR}
-COPY demoapp ${DIR}/demoapp
-
-RUN pip install \
-    --target ${DIR} \
-        awslambdaric
+WORKDIR /src/
+COPY pyproject.toml MANIFEST.in /src/
+COPY demoapp /src/demoapp
 
 ENV PYTHONUSERBASE=/app
-RUN pip install --user ${DIR}
+RUN pip install --user /src
+RUN pip install --user awslambdaric
 
 
 # Runtime container image for both the Web App and the AWS Batch compute image
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 COPY --from=builder /app/ /app/
 
