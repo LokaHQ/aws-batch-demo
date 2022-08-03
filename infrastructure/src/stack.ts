@@ -66,19 +66,7 @@ export class AwsBatchDemoStack extends Stack {
 
     batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
 
-    // const f = new lambda.Function(this, "batch-lambda", {
-    //   runtime: lambda.Runtime.PYTHON_3_7,
-    //   handler: "lambda.lambda_handler",
-    //   code: lambda.Code.fromAsset(path.join(__dirname, "..", "..", "python-demoapp/demoapp")),
-
-    //   memorySize: 128,
-    //   architecture: lambda.Architecture.X86_64,
-    //   timeout: cdk.Duration.seconds(10),
-
-    //   functionName: "batchdemo-lambda",
-    // });
-
-    const f2 = new lambda.Function(this, "batch-lambda-image", {
+    const lambdaFromImage = new lambda.Function(this, "batch-lambda-image", {
       runtime: lambda.Runtime.FROM_IMAGE,
       handler: lambda.Handler.FROM_IMAGE,
       code: lambda.Code.fromEcrImage(asset.repository, {
@@ -106,15 +94,8 @@ export class AwsBatchDemoStack extends Stack {
       },
     });
 
-    // rule.addTarget(
-    //   new targets.LambdaFunction(f, {
-    //     retryAttempts: 5,
-    //     maxEventAge: cdk.Duration.seconds(300),
-    //   })
-    // );
-
     rule.addTarget(
-      new targets.LambdaFunction(f2, {
+      new targets.LambdaFunction(lambdaFromImage, {
         retryAttempts: 5,
         maxEventAge: cdk.Duration.seconds(300),
       })
