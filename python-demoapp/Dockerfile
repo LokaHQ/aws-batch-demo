@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.9 as builder
+FROM public.ecr.aws/docker/library/python:3.10 as builder
 
 # Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
@@ -19,7 +19,7 @@ RUN pip install --user awslambdaric
 
 
 # Runtime container image for both the Web App and the AWS Batch compute image
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 COPY --from=builder /app/ /app/
 
