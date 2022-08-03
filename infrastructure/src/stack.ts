@@ -16,10 +16,7 @@ import {
 import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";
 import path from "path";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as events from "aws-cdk-lib/aws-events";
-import * as targets from "aws-cdk-lib/aws-events-targets";
-import * as cdk from "aws-cdk-lib";
+import { createEventsLambda } from "./events-lambda";
 
 export class AwsBatchDemoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -66,40 +63,7 @@ export class AwsBatchDemoStack extends Stack {
 
     batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
 
-    const lambdaFromImage = new lambda.Function(this, "batch-lambda-image", {
-      runtime: lambda.Runtime.FROM_IMAGE,
-      handler: lambda.Handler.FROM_IMAGE,
-      code: lambda.Code.fromEcrImage(asset.repository, {
-        entrypoint: ["/usr/local/bin/python", "-m", "awslambdaric"],
-        cmd: ["demoapp.lambda.lambda_handler"],
-        tagOrDigest: asset.assetHash,
-      }),
-
-      memorySize: 128,
-      architecture: lambda.Architecture.X86_64,
-      timeout: cdk.Duration.seconds(10),
-
-      functionName: "batchdemo-lambda-image",
-    });
-
-    const rule = new events.Rule(this, "batchdemo-rule", {
-      ruleName: "batchdemo-rule",
-      eventPattern: {
-        source: ["aws.batch"],
-        detail: {
-          // status: ["FAILED"],
-          status: ["SUCCEEDED"],
-        },
-        detailType: ["Batch Job State Change"],
-      },
-    });
-
-    rule.addTarget(
-      new targets.LambdaFunction(lambdaFromImage, {
-        retryAttempts: 5,
-        maxEventAge: cdk.Duration.seconds(300),
-      })
-    );
+    const eventsLambda = createEventsLambda(this, "events-lambda", { asset });
 
     Tags.of(this).add("Team", "DevOps");
     Tags.of(this).add("Project", "BatchDemo");
@@ -115,6 +79,12 @@ export class AwsBatchDemoStack extends Stack {
     });
     new CfnOutput(this, "JobQueueArn", {
       value: batchQueue.jobQueueArn,
+    });
+    new CfnOutput(this, "LambdaArn", {
+      value: eventsLambda.lambdaFromImage.functionArn,
+    });
+    new CfnOutput(this, "RuleArn", {
+      value: eventsLambda.rule.ruleArn,
     });
   }
 }
