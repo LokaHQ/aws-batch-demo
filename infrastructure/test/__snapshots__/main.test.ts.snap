@@ -115,7 +115,9 @@ Object {
     "ServiceLBE9A1ADBC": Object {
       "DependsOn": Array [
         "vpcingressSubnet1DefaultRoute69B9019B",
+        "vpcingressSubnet1RouteTableAssociationBA5D4A44",
         "vpcingressSubnet2DefaultRoute9BA4F3D4",
+        "vpcingressSubnet2RouteTableAssociationBD7DE3FC",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -711,6 +713,20 @@ Object {
             "/app/bin/demoapp-compute",
             "--name",
             "Ref::inputdata",
+          ],
+          "Environment": Array [
+            Object {
+              "Name": "AWS_REGION",
+              "Value": Object {
+                "Ref": "AWS::Region",
+              },
+            },
+            Object {
+              "Name": "AWS_ACCOUNT",
+              "Value": Object {
+                "Ref": "AWS::AccountId",
+              },
+            },
           ],
           "Image": Object {
             "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.\${AWS::Region}.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}:bb228ab87fc051e77a45816900ed7da9b4d3b9d1de991106d67fc5657967a639",
