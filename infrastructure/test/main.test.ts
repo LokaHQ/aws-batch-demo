@@ -1,5 +1,6 @@
-import "jest-cdk-snapshot";
+/// <reference types="jest" />
 import * as cdk from "aws-cdk-lib";
+import "jest-cdk-snapshot";
 
 import { AwsBatchDemoStack} from "../src/stack";
 
