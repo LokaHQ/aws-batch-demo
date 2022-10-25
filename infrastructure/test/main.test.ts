@@ -1,14 +1,14 @@
 /// <reference types="jest" />
 import * as cdk from "aws-cdk-lib";
-import "jest-cdk-snapshot";
+import { Template } from "aws-cdk-lib/assertions";
 
-import { AwsBatchDemoStack} from "../src/stack";
+import { AwsBatchDemoStack } from "../src/stack";
 
 test("snapshot matches previous state", () => {
   const app = new cdk.App();
   const stack = new AwsBatchDemoStack(app, "MyTestStack");
+  const template = Template.fromStack(stack);
+  const templateJson = template.toJSON();
 
-  expect(stack).toMatchCdkSnapshot({
-    ignoreAssets: true,
-  });
-})
+  expect(templateJson).toMatchSnapshot();
+});
