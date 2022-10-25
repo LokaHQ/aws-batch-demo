@@ -293,9 +293,7 @@ exports[`snapshot matches previous state 1`] = `
               },
             ],
             "Essential": true,
-            "Image": {
-              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.\${AWS::Region}.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}:95d1aec2763d039af9da1a7aac143a2f43d337d249929968d2cb1bc336a4dd31",
-            },
+            "Image": "dummy",
             "LogConfiguration": {
               "LogDriver": "awslogs",
               "Options": {
@@ -735,9 +733,7 @@ exports[`snapshot matches previous state 1`] = `
               },
             },
           ],
-          "Image": {
-            "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.\${AWS::Region}.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}:95d1aec2763d039af9da1a7aac143a2f43d337d249929968d2cb1bc336a4dd31",
-          },
+          "Image": "dummy",
           "Privileged": false,
           "ReadonlyRootFilesystem": false,
           "ResourceRequirements": [
