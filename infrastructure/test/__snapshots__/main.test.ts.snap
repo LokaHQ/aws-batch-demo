@@ -1,34 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`snapshot matches previous state 1`] = `
-Object {
-  "Outputs": Object {
-    "JobDefinitonArn": Object {
-      "Value": Object {
+{
+  "Outputs": {
+    "JobDefinitonArn": {
+      "Value": {
         "Ref": "jobDefinitionE329FAEC",
       },
     },
-    "JobQueueArn": Object {
-      "Value": Object {
+    "JobQueueArn": {
+      "Value": {
         "Ref": "jobQueue87DBE095",
       },
     },
-    "ServiceLoadBalancerDNSEC5B149E": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
+    "ServiceLoadBalancerDNSEC5B149E": {
+      "Value": {
+        "Fn::GetAtt": [
           "ServiceLBE9A1ADBC",
           "DNSName",
         ],
       },
     },
-    "ServiceServiceURL250C0FB6": Object {
-      "Value": Object {
-        "Fn::Join": Array [
+    "ServiceServiceURL250C0FB6": {
+      "Value": {
+        "Fn::Join": [
           "",
-          Array [
+          [
             "http://",
-            Object {
-              "Fn::GetAtt": Array [
+            {
+              "Fn::GetAtt": [
                 "ServiceLBE9A1ADBC",
                 "DNSName",
               ],
@@ -37,14 +37,14 @@ Object {
         ],
       },
     },
-    "WebAppUrl": Object {
-      "Value": Object {
-        "Fn::Join": Array [
+    "WebAppUrl": {
+      "Value": {
+        "Fn::Join": [
           "",
-          Array [
+          [
             "http://",
-            Object {
-              "Fn::GetAtt": Array [
+            {
+              "Fn::GetAtt": [
                 "ServiceLBE9A1ADBC",
                 "DNSName",
               ],
@@ -55,20 +55,20 @@ Object {
       },
     },
   },
-  "Resources": Object {
-    "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A": Object {
+  "Resources": {
+    "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A": {
       "Type": "AWS::ECS::Cluster",
     },
-    "Service9571FDD8": Object {
-      "DependsOn": Array [
+    "Service9571FDD8": {
+      "DependsOn": [
         "ServiceLBPublicListenerECSGroup0CC8688C",
         "ServiceLBPublicListener46709EAA",
       ],
-      "Properties": Object {
-        "Cluster": Object {
+      "Properties": {
+        "Cluster": {
           "Ref": "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A",
         },
-        "DeploymentConfiguration": Object {
+        "DeploymentConfiguration": {
           "MaximumPercent": 200,
           "MinimumHealthyPercent": 50,
         },
@@ -76,70 +76,70 @@ Object {
         "EnableECSManagedTags": false,
         "HealthCheckGracePeriodSeconds": 60,
         "LaunchType": "FARGATE",
-        "LoadBalancers": Array [
-          Object {
+        "LoadBalancers": [
+          {
             "ContainerName": "web",
             "ContainerPort": 7070,
-            "TargetGroupArn": Object {
+            "TargetGroupArn": {
               "Ref": "ServiceLBPublicListenerECSGroup0CC8688C",
             },
           },
         ],
-        "NetworkConfiguration": Object {
-          "AwsvpcConfiguration": Object {
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
             "AssignPublicIp": "ENABLED",
-            "SecurityGroups": Array [
-              Object {
-                "Fn::GetAtt": Array [
+            "SecurityGroups": [
+              {
+                "Fn::GetAtt": [
                   "ServiceSecurityGroupEEA09B68",
                   "GroupId",
                 ],
               },
             ],
-            "Subnets": Array [
-              Object {
+            "Subnets": [
+              {
                 "Ref": "vpcingressSubnet1Subnet4E016228",
               },
-              Object {
+              {
                 "Ref": "vpcingressSubnet2SubnetEC320D03",
               },
             ],
           },
         },
-        "TaskDefinition": Object {
+        "TaskDefinition": {
           "Ref": "ServiceTaskDef1922A00F",
         },
       },
       "Type": "AWS::ECS::Service",
     },
-    "ServiceLBE9A1ADBC": Object {
-      "DependsOn": Array [
+    "ServiceLBE9A1ADBC": {
+      "DependsOn": [
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTableAssociationBA5D4A44",
         "vpcingressSubnet2DefaultRoute9BA4F3D4",
         "vpcingressSubnet2RouteTableAssociationBD7DE3FC",
       ],
-      "Properties": Object {
-        "LoadBalancerAttributes": Array [
-          Object {
+      "Properties": {
+        "LoadBalancerAttributes": [
+          {
             "Key": "deletion_protection.enabled",
             "Value": "false",
           },
         ],
         "Scheme": "internet-facing",
-        "SecurityGroups": Array [
-          Object {
-            "Fn::GetAtt": Array [
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
               "ServiceLBSecurityGroupF7435A5C",
               "GroupId",
             ],
           },
         ],
-        "Subnets": Array [
-          Object {
+        "Subnets": [
+          {
             "Ref": "vpcingressSubnet1Subnet4E016228",
           },
-          Object {
+          {
             "Ref": "vpcingressSubnet2SubnetEC320D03",
           },
         ],
@@ -147,17 +147,17 @@ Object {
       },
       "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
     },
-    "ServiceLBPublicListener46709EAA": Object {
-      "Properties": Object {
-        "DefaultActions": Array [
-          Object {
-            "TargetGroupArn": Object {
+    "ServiceLBPublicListener46709EAA": {
+      "Properties": {
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
               "Ref": "ServiceLBPublicListenerECSGroup0CC8688C",
             },
             "Type": "forward",
           },
         ],
-        "LoadBalancerArn": Object {
+        "LoadBalancerArn": {
           "Ref": "ServiceLBE9A1ADBC",
         },
         "Port": 80,
@@ -165,29 +165,29 @@ Object {
       },
       "Type": "AWS::ElasticLoadBalancingV2::Listener",
     },
-    "ServiceLBPublicListenerECSGroup0CC8688C": Object {
-      "Properties": Object {
+    "ServiceLBPublicListenerECSGroup0CC8688C": {
+      "Properties": {
         "HealthCheckPath": "/healthcheck",
         "Port": 80,
         "Protocol": "HTTP",
-        "TargetGroupAttributes": Array [
-          Object {
+        "TargetGroupAttributes": [
+          {
             "Key": "stickiness.enabled",
             "Value": "false",
           },
         ],
         "TargetType": "ip",
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
     },
-    "ServiceLBSecurityGroupF7435A5C": Object {
-      "Properties": Object {
+    "ServiceLBSecurityGroupF7435A5C": {
+      "Properties": {
         "GroupDescription": "Automatically created Security Group for ELB MyTestStackServiceLB3B267320",
-        "SecurityGroupIngress": Array [
-          Object {
+        "SecurityGroupIngress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow from anyone on port 80",
             "FromPort": 80,
@@ -195,24 +195,24 @@ Object {
             "ToPort": 80,
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "ServiceLBSecurityGrouptoMyTestStackServiceSecurityGroup98109A0E7070C118F88E": Object {
-      "Properties": Object {
+    "ServiceLBSecurityGrouptoMyTestStackServiceSecurityGroup98109A0E7070C118F88E": {
+      "Properties": {
         "Description": "Load balancer to target",
-        "DestinationSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
+        "DestinationSecurityGroupId": {
+          "Fn::GetAtt": [
             "ServiceSecurityGroupEEA09B68",
             "GroupId",
           ],
         },
         "FromPort": 7070,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
+        "GroupId": {
+          "Fn::GetAtt": [
             "ServiceLBSecurityGroupF7435A5C",
             "GroupId",
           ],
@@ -222,35 +222,35 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupEgress",
     },
-    "ServiceSecurityGroupEEA09B68": Object {
-      "Properties": Object {
+    "ServiceSecurityGroupEEA09B68": {
+      "Properties": {
         "GroupDescription": "MyTestStack/Service/Service/SecurityGroup",
-        "SecurityGroupEgress": Array [
-          Object {
+        "SecurityGroupEgress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "ServiceSecurityGroupfromMyTestStackServiceLBSecurityGroup4E5826B3707031DBF6AF": Object {
-      "Properties": Object {
+    "ServiceSecurityGroupfromMyTestStackServiceLBSecurityGroup4E5826B3707031DBF6AF": {
+      "Properties": {
         "Description": "Load balancer to target",
         "FromPort": 7070,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
+        "GroupId": {
+          "Fn::GetAtt": [
             "ServiceSecurityGroupEEA09B68",
             "GroupId",
           ],
         },
         "IpProtocol": "tcp",
-        "SourceSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
             "ServiceLBSecurityGroupF7435A5C",
             "GroupId",
           ],
@@ -259,51 +259,51 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
-    "ServiceTaskDef1922A00F": Object {
-      "Properties": Object {
-        "ContainerDefinitions": Array [
-          Object {
-            "Environment": Array [
-              Object {
+    "ServiceTaskDef1922A00F": {
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Environment": [
+              {
                 "Name": "HTTP_PORT",
                 "Value": "7070",
               },
-              Object {
+              {
                 "Name": "JOB_DEFINITION",
-                "Value": Object {
+                "Value": {
                   "Ref": "jobDefinitionE329FAEC",
                 },
               },
-              Object {
+              {
                 "Name": "JOB_QUEUE",
-                "Value": Object {
+                "Value": {
                   "Ref": "jobQueue87DBE095",
                 },
               },
-              Object {
+              {
                 "Name": "SECRET_KEY",
                 "Value": "0736e5b9-a884-4252-911c-6f9d73513a21",
               },
             ],
             "Essential": true,
-            "Image": Object {
+            "Image": {
               "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.\${AWS::Region}.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}:95d1aec2763d039af9da1a7aac143a2f43d337d249929968d2cb1bc336a4dd31",
             },
-            "LogConfiguration": Object {
+            "LogConfiguration": {
               "LogDriver": "awslogs",
-              "Options": Object {
-                "awslogs-group": Object {
+              "Options": {
+                "awslogs-group": {
                   "Ref": "ServiceTaskDefwebLogGroup2A898F61",
                 },
-                "awslogs-region": Object {
+                "awslogs-region": {
                   "Ref": "AWS::Region",
                 },
                 "awslogs-stream-prefix": "Service",
               },
             },
             "Name": "web",
-            "PortMappings": Array [
-              Object {
+            "PortMappings": [
+              {
                 "ContainerPort": 7070,
                 "Protocol": "tcp",
               },
@@ -311,8 +311,8 @@ Object {
           },
         ],
         "Cpu": "256",
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "ServiceTaskDefExecutionRole919F7BE3",
             "Arn",
           ],
@@ -320,11 +320,11 @@ Object {
         "Family": "MyTestStackServiceTaskDef45089EBD",
         "Memory": "512",
         "NetworkMode": "awsvpc",
-        "RequiresCompatibilities": Array [
+        "RequiresCompatibilities": [
           "FARGATE",
         ],
-        "TaskRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
             "ServiceTaskDefTaskRole0CFE2F57",
             "Arn",
           ],
@@ -332,14 +332,14 @@ Object {
       },
       "Type": "AWS::ECS::TaskDefinition",
     },
-    "ServiceTaskDefExecutionRole919F7BE3": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "ServiceTaskDefExecutionRole919F7BE3": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -349,54 +349,54 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "ServiceTaskDefExecutionRoleDefaultPolicy3073559D": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "ServiceTaskDefExecutionRoleDefaultPolicy3073559D": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":ecr:",
-                    Object {
+                    {
                       "Ref": "AWS::Region",
                     },
                     ":",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":repository/",
-                    Object {
+                    {
                       "Fn::Sub": "cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}",
                     },
                   ],
                 ],
               },
             },
-            Object {
+            {
               "Action": "ecr:GetAuthorizationToken",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "ServiceTaskDefwebLogGroup2A898F61",
                   "Arn",
                 ],
@@ -406,22 +406,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "ServiceTaskDefExecutionRoleDefaultPolicy3073559D",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "ServiceTaskDefExecutionRole919F7BE3",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "ServiceTaskDefTaskRole0CFE2F57": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "ServiceTaskDefTaskRole0CFE2F57": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -431,23 +431,23 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "ServiceTaskDefTaskRoleDefaultPolicy9CCB4F8E": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "ServiceTaskDefTaskRoleDefaultPolicy9CCB4F8E": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "batch:ListJobs",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "batch:SubmitJob",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
+              "Resource": [
+                {
                   "Ref": "jobQueue87DBE095",
                 },
-                Object {
+                {
                   "Ref": "jobDefinitionE329FAEC",
                 },
               ],
@@ -456,21 +456,21 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "ServiceTaskDefTaskRoleDefaultPolicy9CCB4F8E",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "ServiceTaskDefTaskRole0CFE2F57",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "ServiceTaskDefwebLogGroup2A898F61": Object {
+    "ServiceTaskDefwebLogGroup2A898F61": {
       "DeletionPolicy": "Retain",
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Retain",
     },
-    "computeEnvironmentEcsInstanceRole4547AA6D": Object {
-      "DependsOn": Array [
+    "computeEnvironmentEcsInstanceRole4547AA6D": {
+      "DependsOn": [
         "vpcIGWE57CBDCA",
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTable1A2E6413",
@@ -489,19 +489,19 @@ Object {
         "vpcA2121C38",
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "Service": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "Service": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "ec2.",
-                      Object {
+                      {
                         "Ref": "AWS::URLSuffix",
                       },
                     ],
@@ -512,13 +512,13 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "arn:",
-                Object {
+                {
                   "Ref": "AWS::Partition",
                 },
                 ":iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role",
@@ -529,8 +529,8 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "computeEnvironmentFCCDFAF8": Object {
-      "DependsOn": Array [
+    "computeEnvironmentFCCDFAF8": {
+      "DependsOn": [
         "vpcIGWE57CBDCA",
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTable1A2E6413",
@@ -549,40 +549,40 @@ Object {
         "vpcA2121C38",
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
-        "ComputeResources": Object {
+      "Properties": {
+        "ComputeResources": {
           "AllocationStrategy": "BEST_FIT",
-          "InstanceRole": Object {
-            "Fn::GetAtt": Array [
+          "InstanceRole": {
+            "Fn::GetAtt": [
               "computeEnvironmentInstanceProfile904A7DA2",
               "Arn",
             ],
           },
-          "InstanceTypes": Array [
+          "InstanceTypes": [
             "optimal",
           ],
           "MaxvCpus": 256,
           "MinvCpus": 0,
-          "SecurityGroupIds": Array [
-            Object {
-              "Fn::GetAtt": Array [
+          "SecurityGroupIds": [
+            {
+              "Fn::GetAtt": [
                 "computeEnvironmentResourceSecurityGroup662A37A1",
                 "GroupId",
               ],
             },
           ],
-          "Subnets": Array [
-            Object {
+          "Subnets": [
+            {
               "Ref": "vpcingressSubnet1Subnet4E016228",
             },
-            Object {
+            {
               "Ref": "vpcingressSubnet2SubnetEC320D03",
             },
           ],
           "Type": "EC2",
         },
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "computeEnvironmentResourceServiceInstanceRoleF536CA04",
             "Arn",
           ],
@@ -592,8 +592,8 @@ Object {
       },
       "Type": "AWS::Batch::ComputeEnvironment",
     },
-    "computeEnvironmentInstanceProfile904A7DA2": Object {
-      "DependsOn": Array [
+    "computeEnvironmentInstanceProfile904A7DA2": {
+      "DependsOn": [
         "vpcIGWE57CBDCA",
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTable1A2E6413",
@@ -612,17 +612,17 @@ Object {
         "vpcA2121C38",
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
-        "Roles": Array [
-          Object {
+      "Properties": {
+        "Roles": [
+          {
             "Ref": "computeEnvironmentEcsInstanceRole4547AA6D",
           },
         ],
       },
       "Type": "AWS::IAM::InstanceProfile",
     },
-    "computeEnvironmentResourceSecurityGroup662A37A1": Object {
-      "DependsOn": Array [
+    "computeEnvironmentResourceSecurityGroup662A37A1": {
+      "DependsOn": [
         "vpcIGWE57CBDCA",
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTable1A2E6413",
@@ -641,23 +641,23 @@ Object {
         "vpcA2121C38",
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
+      "Properties": {
         "GroupDescription": "MyTestStack/computeEnvironment/Resource-Security-Group",
-        "SecurityGroupEgress": Array [
-          Object {
+        "SecurityGroupEgress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "computeEnvironmentResourceServiceInstanceRoleF536CA04": Object {
-      "DependsOn": Array [
+    "computeEnvironmentResourceServiceInstanceRoleF536CA04": {
+      "DependsOn": [
         "vpcIGWE57CBDCA",
         "vpcingressSubnet1DefaultRoute69B9019B",
         "vpcingressSubnet1RouteTable1A2E6413",
@@ -676,26 +676,26 @@ Object {
         "vpcA2121C38",
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "batch.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "arn:",
-                Object {
+                {
                   "Ref": "AWS::Partition",
                 },
                 ":iam::aws:policy/service-role/AWSBatchServiceRole",
@@ -706,61 +706,61 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "jobDefinitionE329FAEC": Object {
-      "Properties": Object {
-        "ContainerProperties": Object {
-          "Command": Array [
+    "jobDefinitionE329FAEC": {
+      "Properties": {
+        "ContainerProperties": {
+          "Command": [
             "/app/bin/demoapp-compute",
             "--name",
             "Ref::inputdata",
           ],
-          "Environment": Array [
-            Object {
+          "Environment": [
+            {
               "Name": "AWS_REGION",
-              "Value": Object {
+              "Value": {
                 "Ref": "AWS::Region",
               },
             },
-            Object {
+            {
               "Name": "AWS_ACCOUNT",
-              "Value": Object {
+              "Value": {
                 "Ref": "AWS::AccountId",
               },
             },
           ],
-          "Image": Object {
+          "Image": {
             "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.\${AWS::Region}.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}:95d1aec2763d039af9da1a7aac143a2f43d337d249929968d2cb1bc336a4dd31",
           },
           "Privileged": false,
           "ReadonlyRootFilesystem": false,
-          "ResourceRequirements": Array [
-            Object {
+          "ResourceRequirements": [
+            {
               "Type": "VCPU",
               "Value": "1",
             },
-            Object {
+            {
               "Type": "MEMORY",
               "Value": "512",
             },
           ],
         },
         "JobDefinitionName": "jobDefinitionName",
-        "PlatformCapabilities": Array [
+        "PlatformCapabilities": [
           "EC2",
         ],
-        "RetryStrategy": Object {
+        "RetryStrategy": {
           "Attempts": 1,
         },
-        "Timeout": Object {},
+        "Timeout": {},
         "Type": "container",
       },
       "Type": "AWS::Batch::JobDefinition",
     },
-    "jobQueue87DBE095": Object {
-      "Properties": Object {
-        "ComputeEnvironmentOrder": Array [
-          Object {
-            "ComputeEnvironment": Object {
+    "jobQueue87DBE095": {
+      "Properties": {
+        "ComputeEnvironmentOrder": [
+          {
+            "ComputeEnvironment": {
               "Ref": "computeEnvironmentFCCDFAF8",
             },
             "Order": 100,
@@ -772,14 +772,14 @@ Object {
       },
       "Type": "AWS::Batch::JobQueue",
     },
-    "vpcA2121C38": Object {
-      "Properties": Object {
+    "vpcA2121C38": {
+      "Properties": {
         "CidrBlock": "10.0.0.0/16",
         "EnableDnsHostnames": true,
         "EnableDnsSupport": true,
         "InstanceTenancy": "default",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc",
           },
@@ -787,10 +787,10 @@ Object {
       },
       "Type": "AWS::EC2::VPC",
     },
-    "vpcIGWE57CBDCA": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "vpcIGWE57CBDCA": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc",
           },
@@ -798,270 +798,270 @@ Object {
       },
       "Type": "AWS::EC2::InternetGateway",
     },
-    "vpcVPCGW7984C166": Object {
-      "Properties": Object {
-        "InternetGatewayId": Object {
+    "vpcVPCGW7984C166": {
+      "Properties": {
+        "InternetGatewayId": {
           "Ref": "vpcIGWE57CBDCA",
         },
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::VPCGatewayAttachment",
     },
-    "vpcingressSubnet1DefaultRoute69B9019B": Object {
-      "DependsOn": Array [
+    "vpcingressSubnet1DefaultRoute69B9019B": {
+      "DependsOn": [
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
+        "GatewayId": {
           "Ref": "vpcIGWE57CBDCA",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "vpcingressSubnet1RouteTable1A2E6413",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "vpcingressSubnet1RouteTable1A2E6413": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "vpcingressSubnet1RouteTable1A2E6413": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "vpcingressSubnet1RouteTableAssociationBA5D4A44": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "vpcingressSubnet1RouteTableAssociationBA5D4A44": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "vpcingressSubnet1RouteTable1A2E6413",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "vpcingressSubnet1Subnet4E016228",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "vpcingressSubnet1Subnet4E016228": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "vpcingressSubnet1Subnet4E016228": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             0,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.0.0/24",
         "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "ingress",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "vpcingressSubnet2DefaultRoute9BA4F3D4": Object {
-      "DependsOn": Array [
+    "vpcingressSubnet2DefaultRoute9BA4F3D4": {
+      "DependsOn": [
         "vpcVPCGW7984C166",
       ],
-      "Properties": Object {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
+        "GatewayId": {
           "Ref": "vpcIGWE57CBDCA",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "vpcingressSubnet2RouteTable4047C3AC",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "vpcingressSubnet2RouteTable4047C3AC": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "vpcingressSubnet2RouteTable4047C3AC": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "vpcingressSubnet2RouteTableAssociationBD7DE3FC": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "vpcingressSubnet2RouteTableAssociationBD7DE3FC": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "vpcingressSubnet2RouteTable4047C3AC",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "vpcingressSubnet2SubnetEC320D03",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "vpcingressSubnet2SubnetEC320D03": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "vpcingressSubnet2SubnetEC320D03": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             1,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.1.0/24",
         "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "ingress",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "vpcrdsSubnet1RouteTableAssociation3E946461": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "vpcrdsSubnet1RouteTableAssociation3E946461": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "vpcrdsSubnet1RouteTableFFE08759",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "vpcrdsSubnet1Subnet81509054",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "vpcrdsSubnet1RouteTableFFE08759": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "vpcrdsSubnet1RouteTableFFE08759": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "vpcrdsSubnet1Subnet81509054": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "vpcrdsSubnet1Subnet81509054": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             0,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.2.0/24",
         "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "rds",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Isolated",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "vpcrdsSubnet2RouteTable780314E2": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "vpcrdsSubnet2RouteTable780314E2": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "vpcrdsSubnet2RouteTableAssociationA8E58271": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "vpcrdsSubnet2RouteTableAssociationA8E58271": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "vpcrdsSubnet2RouteTable780314E2",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "vpcrdsSubnet2SubnetCEFF1A53",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "vpcrdsSubnet2SubnetCEFF1A53": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "vpcrdsSubnet2SubnetCEFF1A53": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             1,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.3.0/24",
         "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "rds",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Isolated",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "vpcA2121C38",
         },
       },
