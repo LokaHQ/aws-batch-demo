@@ -19,7 +19,10 @@ test("snapshot matches previous state", () => {
 });
 
 
-/*** in-place mutate to replace the Image asset */
+/// The following code is ugly, don't look at it :/
+
+
+/*** in-place mutate the resources to replace the Image asset */
 function cleanUpAssetsJobDefinitions(resources: any) {
   for (const key of Object.keys(resources)) {
     const resource = resources[key];
@@ -27,7 +30,7 @@ function cleanUpAssetsJobDefinitions(resources: any) {
   }
 }
 
-/*** in-place mutate to replace the Image asset */
+/*** in-place mutate the resources to replace the Image asset */
 function cleanUpAssetsTaskDefinitions(resources: any) {
   for (const key of Object.keys(resources)) {
     const resource = resources[key];
