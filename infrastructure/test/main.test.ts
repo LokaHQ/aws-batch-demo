@@ -19,10 +19,13 @@ test("snapshot matches previous state", () => {
 });
 
 
-/// The following code is ugly, don't look at it :/
+/**
+ * Docker image assets (their sha256 id) are not reproducible, so we have to strip them from the test snapshot.
+ * The following 2 functions will strip (replace really) the image ids, so we can match the snapshot.
+ *
+ */
 
-
-/*** in-place mutate the resources to replace the Image asset */
+/*** in-place mutate the resources to strip the Image asset */
 function cleanUpAssetsJobDefinitions(resources: any) {
   for (const key of Object.keys(resources)) {
     const resource = resources[key];
@@ -30,7 +33,7 @@ function cleanUpAssetsJobDefinitions(resources: any) {
   }
 }
 
-/*** in-place mutate the resources to replace the Image asset */
+/*** in-place mutate the resources to strip the Image asset */
 function cleanUpAssetsTaskDefinitions(resources: any) {
   for (const key of Object.keys(resources)) {
     const resource = resources[key];
