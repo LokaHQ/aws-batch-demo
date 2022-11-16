@@ -14,24 +14,10 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: install deps
         run: yarn
-
-      - run: yarn lint
-      - run: yarn prettier
-      - run: yarn compile
-      - run: yarn synth
-      - run: yarn test
-
-  ci-on-upgraded:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: install deps
-        run: yarn upgrade --caret --latest
 
       - run: yarn lint
       - run: yarn prettier
