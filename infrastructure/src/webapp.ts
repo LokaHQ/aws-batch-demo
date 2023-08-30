@@ -1,7 +1,8 @@
-import { JobDefinition, JobQueue } from "@aws-cdk/aws-batch-alpha";
+import { JobDefinitionBase, JobQueue } from "@aws-cdk/aws-batch-alpha";
 import { IVpc } from "aws-cdk-lib/aws-ec2";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
+import { ApplicationProtocol } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
@@ -9,7 +10,7 @@ export function createWebApp(
   scope: Construct,
   vpc: IVpc,
   containerImage: ContainerImage,
-  batch: { jobQueue: JobQueue; jobDefinition: JobDefinition }
+  batch: { jobQueue: JobQueue; jobDefinition: JobDefinitionBase },
 ) {
   const loadBalancedFargate = new ApplicationLoadBalancedFargateService(scope, "Service", {
     vpc,
@@ -26,7 +27,14 @@ export function createWebApp(
       },
     },
     desiredCount: 2,
-    // redirectHTTP: true,
+    /* A real production deployment would have https,
+     * and a DNS Zone and Certificates and all,
+     * but this is a demo.
+     */
+    redirectHTTP: false,
+    domainName: undefined,
+    domainZone: undefined,
+    protocol: ApplicationProtocol.HTTP,
   });
 
   loadBalancedFargate.targetGroup.configureHealthCheck({
@@ -37,13 +45,7 @@ export function createWebApp(
     new PolicyStatement({
       actions: ["batch:ListJobs"],
       resources: ["*"],
-    })
-  );
-  loadBalancedFargate.taskDefinition.addToTaskRolePolicy(
-    new PolicyStatement({
-      actions: ["batch:SubmitJob"],
-      resources: [batch.jobQueue.jobQueueArn, batch.jobDefinition.jobDefinitionArn],
-    })
+    }),
   );
 
   return loadBalancedFargate;
