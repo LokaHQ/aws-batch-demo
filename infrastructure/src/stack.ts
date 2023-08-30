@@ -1,11 +1,20 @@
+import path from "path";
 import { Construct } from "constructs";
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Size, Stack, StackProps } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
-import { createBatch } from "./batch";
+import {
+  Action,
+  EcsFargateContainerDefinition,
+  EcsJobDefinition,
+  FargateComputeEnvironment,
+  JobQueue,
+  Reason,
+  RetryStrategy,
+} from "@aws-cdk/aws-batch-alpha";
+
 import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";
-import path from "path";
 
 export class AwsBatchDemoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -19,16 +28,38 @@ export class AwsBatchDemoStack extends Stack {
     const containerImage = ContainerImage.fromDockerImageAsset(asset);
     /**
      *  Alternatively, we can use an image already in ECR
-        const containerImage = ContainerImage.fromEcrRepository(…);
-    */
+     *  const containerImage = ContainerImage.fromEcrRepository(…);
+     */
 
-    const batch = createBatch(this, "batch", {
+    /**
+     * Batch on Fargate
+     */
+    const batchComputeEnv = new FargateComputeEnvironment(this, "myFargateComputeEnv", {
       vpc,
-      image: containerImage,
-      imageCommand: ["/app/bin/demoapp-compute", "--name", "Ref::inputdata"],
+      computeEnvironmentName: "batch-demo",
     });
 
-    const app = createWebApp(this, vpc, containerImage, batch);
+    const batchQueue = new JobQueue(this, "JobQueue", { jobQueueName: "batch-demo" });
+    batchQueue.addComputeEnvironment(batchComputeEnv, 100);
+
+    const batchDefn = new EcsJobDefinition(this, "JobDefn", {
+      jobDefinitionName: "batch-demo",
+      container: new EcsFargateContainerDefinition(this, "containerDefn", {
+        image: containerImage,
+        command: ["/app/bin/demoapp-compute", "--name", "Ref::inputdata"],
+        memory: Size.mebibytes(512),
+        cpu: 256,
+      }),
+      retryAttempts: 5,
+      retryStrategies: [RetryStrategy.of(Action.EXIT, Reason.CANNOT_PULL_CONTAINER)],
+    });
+
+    /**
+     * Create the Webapp on Fargate
+     */
+    const app = createWebApp(this, vpc, containerImage, { jobQueue: batchQueue, jobDefinition: batchDefn });
+
+    batchDefn.grantSubmitJob(app.taskDefinition.taskRole, batchQueue);
 
     /**
      * Cloudformation Outputs
@@ -37,10 +68,10 @@ export class AwsBatchDemoStack extends Stack {
       value: `http://${app.loadBalancer.loadBalancerDnsName}/`,
     });
     new CfnOutput(this, "JobDefinitonArn", {
-      value: batch.jobDefinition.jobDefinitionArn,
+      value: batchDefn.jobDefinitionArn,
     });
     new CfnOutput(this, "JobQueueArn", {
-      value: batch.jobQueue.jobQueueArn,
+      value: batchQueue.jobQueueArn,
     });
   }
 }
