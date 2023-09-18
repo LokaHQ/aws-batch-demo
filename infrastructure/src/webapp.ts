@@ -1,4 +1,4 @@
-import { JobDefinitionBase, JobQueue } from "@aws-cdk/aws-batch-alpha";
+import { JobQueue, JobDefinitionBase } from "aws-cdk-lib/aws-batch";
 import { IVpc } from "aws-cdk-lib/aws-ec2";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";

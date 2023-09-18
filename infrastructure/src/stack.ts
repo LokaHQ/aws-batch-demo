@@ -5,13 +5,13 @@ import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { ContainerImage } from "aws-cdk-lib/aws-ecs";
 import {
   Action,
-  EcsFargateContainerDefinition,
-  EcsJobDefinition,
   FargateComputeEnvironment,
   JobQueue,
-  Reason,
+  EcsJobDefinition,
+  EcsFargateContainerDefinition,
   RetryStrategy,
-} from "@aws-cdk/aws-batch-alpha";
+  Reason,
+} from "aws-cdk-lib/aws-batch";
 
 import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";

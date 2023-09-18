@@ -685,7 +685,6 @@ exports[`snapshot matches previous state 1`] = `
             },
           ],
           "Type": "FARGATE",
-          "UpdateToLatestImageVersion": true,
         },
         "ReplaceComputeEnvironment": false,
         "State": "ENABLED",
