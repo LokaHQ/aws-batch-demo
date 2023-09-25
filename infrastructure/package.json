@@ -1,8 +1,8 @@
 {
-  "name": "aws-batch-demo",
-  "version": "0.1.0",
+  "name": "@LokaHQ/aws-batch-demo",
+  "version": "1.0.0",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
     "compile": "tsc --pretty",
@@ -36,6 +36,7 @@
   },
   "engines": {
     "node": ">=18",
-    "yarn": "~1.22.0 <2"
+    "yarn": "~1.22.0 <2",
+    "npm": "please-use-yarn"
   }
 }
