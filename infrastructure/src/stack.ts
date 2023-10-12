@@ -1,4 +1,3 @@
-import path from "path";
 import { Construct } from "constructs";
 import { CfnOutput, Size, Stack, StackProps, Tags } from "aws-cdk-lib";
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
@@ -13,9 +12,10 @@ import {
   Reason,
 } from "aws-cdk-lib/aws-batch";
 
+import path from "node:path";
+
 import { createVPC } from "./vpc";
 import { createWebApp } from "./webapp";
-import path from "path";
 import { createEventsLambda } from "./events-lambda";
 
 export class AwsBatchDemoStack extends Stack {
