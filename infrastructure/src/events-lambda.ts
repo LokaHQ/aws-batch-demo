@@ -10,7 +10,7 @@ interface EventsLambdaProps {
 }
 
 export function createEventsLambda(scope: Construct, name: string, props: EventsLambdaProps) {
-  const lambdaFromImage = new lambda.Function(scope, "batch-lambda-image", {
+  const lambdaFromImage = new lambda.Function(scope, `${name}-lambda`, {
     runtime: lambda.Runtime.FROM_IMAGE,
     handler: lambda.Handler.FROM_IMAGE,
     code: lambda.Code.fromEcrImage(props.asset.repository, {
@@ -23,11 +23,11 @@ export function createEventsLambda(scope: Construct, name: string, props: Events
     architecture: lambda.Architecture.X86_64,
     timeout: cdk.Duration.seconds(10),
 
-    functionName: "batchdemo-lambda-image",
+    functionName: name,
   });
 
-  const rule = new events.Rule(scope, "batchdemo-rule", {
-    ruleName: "batchdemo-rule",
+  const rule = new events.Rule(scope, `${name}-rule`, {
+    ruleName: name,
     eventPattern: {
       source: ["aws.batch"],
       detail: {
