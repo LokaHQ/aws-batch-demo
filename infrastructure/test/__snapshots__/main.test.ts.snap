@@ -16,6 +16,22 @@ exports[`snapshot matches previous state 1`] = `
         ],
       },
     },
+    "LambdaArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "eventslambdalambdaBA9837E8",
+          "Arn",
+        ],
+      },
+    },
+    "RuleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "eventslambdarule1777E06C",
+          "Arn",
+        ],
+      },
+    },
     "ServiceLoadBalancerDNSEC5B149E": {
       "Value": {
         "Fn::GetAtt": [
@@ -67,6 +83,18 @@ exports[`snapshot matches previous state 1`] = `
   },
   "Resources": {
     "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
+      },
       "Type": "AWS::ECS::Cluster",
     },
     "JobDefnA747EE6E": {
@@ -114,6 +142,10 @@ exports[`snapshot matches previous state 1`] = `
             },
           ],
         },
+        "Tags": {
+          "Project": "BatchDemo",
+          "Team": "DevOps",
+        },
         "Timeout": {},
         "Type": "container",
       },
@@ -135,6 +167,10 @@ exports[`snapshot matches previous state 1`] = `
         "JobQueueName": "batch-demo",
         "Priority": 1,
         "State": "ENABLED",
+        "Tags": {
+          "Project": "BatchDemo",
+          "Team": "DevOps",
+        },
       },
       "Type": "AWS::Batch::JobQueue",
     },
@@ -192,6 +228,16 @@ exports[`snapshot matches previous state 1`] = `
             ],
           },
         },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
         "TaskDefinition": {
           "Ref": "ServiceTaskDef1922A00F",
         },
@@ -229,6 +275,16 @@ exports[`snapshot matches previous state 1`] = `
             "Ref": "vpcingressSubnet2SubnetEC320D03",
           },
         ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
         "Type": "application",
       },
       "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
@@ -256,6 +312,16 @@ exports[`snapshot matches previous state 1`] = `
         "HealthCheckPath": "/healthcheck",
         "Port": 80,
         "Protocol": "HTTP",
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
         "TargetGroupAttributes": [
           {
             "Key": "stickiness.enabled",
@@ -279,6 +345,16 @@ exports[`snapshot matches previous state 1`] = `
             "FromPort": 80,
             "IpProtocol": "tcp",
             "ToPort": 80,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -320,6 +396,16 @@ exports[`snapshot matches previous state 1`] = `
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -418,6 +504,16 @@ exports[`snapshot matches previous state 1`] = `
         "RequiresCompatibilities": [
           "FARGATE",
         ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
         "TaskRoleArn": {
           "Fn::GetAtt": [
             "ServiceTaskDefTaskRole0CFE2F57",
@@ -441,6 +537,16 @@ exports[`snapshot matches previous state 1`] = `
           ],
           "Version": "2012-10-17",
         },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
       },
       "Type": "AWS::IAM::Role",
     },
@@ -523,6 +629,16 @@ exports[`snapshot matches previous state 1`] = `
           ],
           "Version": "2012-10-17",
         },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
       },
       "Type": "AWS::IAM::Role",
     },
@@ -564,6 +680,18 @@ exports[`snapshot matches previous state 1`] = `
     },
     "ServiceTaskDefwebLogGroup2A898F61": {
       "DeletionPolicy": "Retain",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
+      },
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Retain",
     },
@@ -581,6 +709,16 @@ exports[`snapshot matches previous state 1`] = `
           ],
           "Version": "2012-10-17",
         },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
       },
       "Type": "AWS::IAM::Role",
     },
@@ -663,6 +801,167 @@ exports[`snapshot matches previous state 1`] = `
       },
       "Type": "AWS::IAM::Policy",
     },
+    "eventslambdalambdaBA9837E8": {
+      "DependsOn": [
+        "eventslambdalambdaServiceRole0ED545F9",
+      ],
+      "Properties": {
+        "Architectures": [
+          "x86_64",
+        ],
+        "Code": {
+          "ImageUri": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Ref": "AWS::AccountId",
+                },
+                ".dkr.ecr.",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ".",
+                {
+                  "Ref": "AWS::URLSuffix",
+                },
+                "/",
+                {
+                  "Fn::Sub": "cdk-hnb659fds-container-assets-\${AWS::AccountId}-\${AWS::Region}",
+                },
+                ":937ef246156cd49774a8f8da803dc40930452c7e1c81ed19e2d8ef61a82e3925",
+              ],
+            ],
+          },
+        },
+        "FunctionName": "batchdemo-lambda-image",
+        "ImageConfig": {
+          "Command": [
+            "demoapp.lambda.lambda_handler",
+          ],
+          "EntryPoint": [
+            "/usr/local/bin/python",
+            "-m",
+            "awslambdaric",
+          ],
+        },
+        "MemorySize": 128,
+        "PackageType": "Image",
+        "Role": {
+          "Fn::GetAtt": [
+            "eventslambdalambdaServiceRole0ED545F9",
+            "Arn",
+          ],
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
+        "Timeout": 10,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "eventslambdalambdaServiceRole0ED545F9": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "eventslambdarule1777E06C": {
+      "Properties": {
+        "EventPattern": {
+          "detail": {
+            "status": [
+              "SUCCEEDED",
+            ],
+          },
+          "detail-type": [
+            "Batch Job State Change",
+          ],
+          "source": [
+            "aws.batch",
+          ],
+        },
+        "Name": "batchdemo-rule",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "eventslambdalambdaBA9837E8",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+            "RetryPolicy": {
+              "MaximumEventAgeInSeconds": 300,
+              "MaximumRetryAttempts": 5,
+            },
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "eventslambdaruleAllowEventRuleMyTestStackeventslambdalambda38419568DE02C313": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "eventslambdalambdaBA9837E8",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "eventslambdarule1777E06C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
     "myFargateComputeEnv4C0A2B80": {
       "Properties": {
         "ComputeEnvironmentName": "batch-demo",
@@ -688,6 +987,10 @@ exports[`snapshot matches previous state 1`] = `
         },
         "ReplaceComputeEnvironment": false,
         "State": "ENABLED",
+        "Tags": {
+          "Project": "BatchDemo",
+          "Team": "DevOps",
+        },
         "Type": "managed",
         "UpdatePolicy": {},
       },
@@ -701,6 +1004,16 @@ exports[`snapshot matches previous state 1`] = `
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -720,6 +1033,14 @@ exports[`snapshot matches previous state 1`] = `
             "Key": "Name",
             "Value": "MyTestStack/vpc",
           },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
         ],
       },
       "Type": "AWS::EC2::VPC",
@@ -730,6 +1051,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
       },
@@ -767,6 +1096,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet1",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -811,6 +1148,14 @@ exports[`snapshot matches previous state 1`] = `
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet1",
           },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
         ],
         "VpcId": {
           "Ref": "vpcA2121C38",
@@ -839,6 +1184,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet2",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -883,6 +1236,14 @@ exports[`snapshot matches previous state 1`] = `
             "Key": "Name",
             "Value": "MyTestStack/vpc/ingressSubnet2",
           },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
         ],
         "VpcId": {
           "Ref": "vpcA2121C38",
@@ -907,6 +1268,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet1",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -940,6 +1309,14 @@ exports[`snapshot matches previous state 1`] = `
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet1",
           },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
+          },
         ],
         "VpcId": {
           "Ref": "vpcA2121C38",
@@ -953,6 +1330,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet2",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
@@ -996,6 +1381,14 @@ exports[`snapshot matches previous state 1`] = `
           {
             "Key": "Name",
             "Value": "MyTestStack/vpc/rdsSubnet2",
+          },
+          {
+            "Key": "Project",
+            "Value": "BatchDemo",
+          },
+          {
+            "Key": "Team",
+            "Value": "DevOps",
           },
         ],
         "VpcId": {
